@@ -17,11 +17,15 @@ public class PassportRepositoryTest extends BaseTest {
 	@Autowired
 	private EntityManager em;
 
+	@Autowired
+	private PassportRepository repo;
+
 	@Test
 	// Don't need @Transactional here, because when querying the "child" passport
 	// table, Hibernate automatically queries the "parent" student table as well
 	public void getPassportAndStudent() {
-		Passport passport = em.find(Passport.class, 30002L);
+//		Passport passport = em.find(Passport.class, 30002L);
+		Passport passport = repo.findById(30002L);
 		log("Passport 30002: " + passport);
 		log("Associated student: " + passport.getStudent());
 	}

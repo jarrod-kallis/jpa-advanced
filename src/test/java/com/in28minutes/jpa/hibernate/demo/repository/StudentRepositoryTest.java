@@ -1,5 +1,7 @@
 package com.in28minutes.jpa.hibernate.demo.repository;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import javax.transaction.Transactional;
 
 import org.junit.Test;
@@ -27,4 +29,10 @@ public class StudentRepositoryTest extends BaseTest {
 		log(student.getPassport());
 	}
 
+	@Test
+	@Transactional
+	public void getCourses() {
+		Student student = repo.findById(20001);
+		assertEquals(2, student.getCourses().size());
+	}
 }

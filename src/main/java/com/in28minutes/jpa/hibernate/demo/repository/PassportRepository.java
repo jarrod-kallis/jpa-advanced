@@ -15,6 +15,10 @@ public class PassportRepository {
 	@PersistenceContext
 	private EntityManager em;
 
+	public Passport findById(long id) {
+		return em.find(Passport.class, id);
+	}
+
 	public Passport save(Passport passport) {
 		return em.merge(passport);
 	}

@@ -38,7 +38,15 @@ public class DemoApplication implements CommandLineRunner {
 		// courseRepo.deleteById(10003);
 
 		courseRepo.playWithEntityManager();
-		studentRepo.playWithEntityManager();
+//		studentRepo.playWithEntityManager();
+		courseRepo.getReviews();
+
+//		studentRepo.createStudentAndCourseAndLink();
+//		studentRepo.deleteById(20001);
+
+		// courseRepo.deleteById(10001);
+
+//		studentRepo.deletePassportById(30001);
 	}
 
 }

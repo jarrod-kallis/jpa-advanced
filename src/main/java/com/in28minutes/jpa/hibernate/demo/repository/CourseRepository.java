@@ -5,10 +5,15 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.in28minutes.jpa.hibernate.demo.entity.Course;
+import com.in28minutes.jpa.hibernate.demo.entity.Review;
+import com.in28minutes.jpa.hibernate.demo.entity.Student;
 
 @Repository
 @Transactional
@@ -16,10 +21,13 @@ public class CourseRepository {
 	public static final String FIND_ALL = "FIND_ALL";
 	public static final String FIND_BY_NAME = "FIND_BY_NAME";
 
-//	private Logger logger = LoggerFactory.getLogger(this.getClass());
+	private Logger logger = LoggerFactory.getLogger(this.getClass());
 
 	@PersistenceContext
 	private EntityManager em;
+
+	@Autowired
+	private StudentRepository studentRepo;
 
 	public List<Course> findAll() {
 		return em.createNamedQuery(FIND_ALL, Course.class).getResultList();
@@ -41,6 +49,14 @@ public class CourseRepository {
 
 	public void deleteById(long id) {
 		Course course = findById(id);
+
+		// Handle the removing of the student_course link
+		for (Student student : course.getStudents()) {
+			student.getCourses().remove(course);
+		}
+
+//		course.setStudents(new ArrayList<Student>());
+
 		em.remove(course);
 	}
 
@@ -78,6 +94,46 @@ public class CourseRepository {
 //		course4.setName("My updated 4th new course");
 //		em.refresh(course4); // Get the contents from the DB
 //		logger.info("Course 4: {}", course4); // "My 4th new course"
+
+		addReviews();
+		getStudents(10001);
+
 //		// Transaction End
+	}
+
+	private void addReviews() {
+		Course course = findById(10002);
+
+		Review review = new Review("1", "Why did I bother?");
+		review.setCourse(course);
+		review.setStudent(studentRepo.findById(20001));
+//		course.getReviews().add(review);
+		em.persist(review);
+
+		review = new Review("5", null);
+		review.setCourse(course);
+		review.setStudent(studentRepo.findById(20003));
+//		course.getReviews().add(review);
+		em.persist(review);
+//		em.flush();
+
+//		logger.info("Course 10002's Reviews: {}", course.getReviews());
+	}
+
+	public List<Review> getReviews() {
+		Course course = findById(10002);
+		List<Review> reviews = course.getReviews();
+		logger.info("Course 10002's Reviews: {}", reviews);
+
+		for (Review review : reviews) {
+			logger.info("Review {}'s student: {}", review.getId(), review.getStudent());
+		}
+
+		return course.getReviews();
+	}
+
+	public void getStudents(long id) {
+		Course course = findById(id);
+		logger.info("Course {}'s Students: {}", id, course.getStudents());
 	}
 }
