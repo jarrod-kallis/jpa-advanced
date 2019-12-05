@@ -4,6 +4,8 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertNull;
 
+import java.util.List;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +25,18 @@ public class CourseRepositoryTest {
 
 	@Autowired
 	private CourseRepository courseRepo;
+
+	@Test
+	public void findAll() {
+		List<Course> courses = courseRepo.findAll();
+		assertEquals(7, courses.size());
+	}
+
+	@Test
+	public void findByName() {
+		List<Course> courses = courseRepo.findByName("50");
+		assertEquals(1, courses.size());
+	}
 
 	@Test
 	public void findById() {
