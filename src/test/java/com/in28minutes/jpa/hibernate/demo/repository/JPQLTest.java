@@ -1,5 +1,7 @@
 package com.in28minutes.jpa.hibernate.demo.repository;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -43,5 +45,31 @@ public class JPQLTest extends BaseTest {
 				.getResultList();
 
 		log(courses);
+	}
+
+	@Test
+	public void findCoursesWithNoStudents() {
+		List<Course> courses = em.createQuery("select c from Course c where c.students is empty", Course.class)
+				.getResultList();
+
+		log("Courses with no students: " + courses);
+		assertEquals(1, courses.size());
+	}
+
+	@Test
+	public void findCoursesWithMoreThan2Students() {
+		List<Course> courses = em.createQuery("select c from Course c where size(c.students) > 2", Course.class)
+				.getResultList();
+
+		log("Courses with more than 2 students: " + courses);
+		assertEquals(1, courses.size());
+	}
+
+	@Test
+	public void orderCoursesByNumberOfStudents() {
+		List<Course> courses = em.createQuery("select c from Course c order by size(c.students) desc", Course.class)
+				.getResultList();
+
+		log("Order Courses by students: " + courses);
 	}
 }
