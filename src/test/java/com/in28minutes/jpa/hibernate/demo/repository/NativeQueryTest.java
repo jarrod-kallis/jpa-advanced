@@ -28,7 +28,7 @@ public class NativeQueryTest extends BaseTest {
 	public void findAll() {
 		List<Course> courses = em.createNativeQuery("select * from course", Course.class).getResultList();
 
-		log(this.getClass().getName() + "." + new Throwable().getStackTrace()[0].getMethodName(), courses);
+		log(courses);
 	}
 
 	@Test
@@ -37,7 +37,7 @@ public class NativeQueryTest extends BaseTest {
 		List<Course> courses = em.createNativeQuery("select * from course where id = ?", Course.class)
 				.setParameter(1, 10001).getResultList();
 
-		log(this.getClass().getName() + "." + new Throwable().getStackTrace()[0].getMethodName(), courses);
+		log(courses);
 	}
 
 	@Test
@@ -46,7 +46,7 @@ public class NativeQueryTest extends BaseTest {
 		List<Course> courses = em.createNativeQuery("select * from course where id = :id", Course.class)
 				.setParameter("id", 10001).getResultList();
 
-		log(this.getClass().getName() + "." + new Throwable().getStackTrace()[0].getMethodName(), courses);
+		log(courses);
 	}
 
 	@Test
@@ -56,8 +56,7 @@ public class NativeQueryTest extends BaseTest {
 		int rowsUpdated = em.createNativeQuery("update course set updated_date = sysdate()", Course.class)
 				.executeUpdate();
 
-		log(this.getClass().getName() + "." + new Throwable().getStackTrace()[0].getMethodName(),
-				"No. of rows updated: " + rowsUpdated);
+		log("No. of rows updated: " + rowsUpdated);
 		assertEquals(7, 7);
 	}
 }

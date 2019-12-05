@@ -24,7 +24,7 @@ public class JPQLTest extends BaseTest {
 	public void findAllCoursesUntyped() {
 		List courses = em.createQuery("select c from Course c").getResultList();
 
-		log(this.getClass().getName() + "." + new Throwable().getStackTrace()[0].getMethodName(), courses);
+		log(courses);
 //		logger.info("{}: {}", this.getClass().getName() + "." + new Throwable().getStackTrace()[0].getMethodName(),
 //				courses);
 	}
@@ -33,7 +33,7 @@ public class JPQLTest extends BaseTest {
 	public void findAllCoursesTyped() {
 		List<Course> courses = em.createQuery("select c from Course c", Course.class).getResultList();
 
-		log(this.getClass().getName() + "." + new Throwable().getStackTrace()[0].getMethodName(), courses);
+		log(courses);
 	}
 
 	@Test
@@ -42,6 +42,6 @@ public class JPQLTest extends BaseTest {
 				.createQuery("select c from Course c where c.id = 1 or c.name like '%50%'", Course.class)
 				.getResultList();
 
-		log(this.getClass().getName() + "." + new Throwable().getStackTrace()[0].getMethodName(), courses);
+		log(courses);
 	}
 }
