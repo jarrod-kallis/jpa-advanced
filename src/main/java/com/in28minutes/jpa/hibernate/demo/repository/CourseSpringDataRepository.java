@@ -4,9 +4,12 @@ import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 
 import com.in28minutes.jpa.hibernate.demo.entity.Course;
 
+// Automatically adds REST capabilities
+@RepositoryRestResource(path = "courses")
 public interface CourseSpringDataRepository extends JpaRepository<Course, Long> {
 	public List<Course> findByName(String name);
 
@@ -18,10 +21,10 @@ public interface CourseSpringDataRepository extends JpaRepository<Course, Long> 
 
 	public List<Course> deleteByName(String name);
 
-	@Query("select c from course where name like '%50%'")
+	@Query("select c from Course c where name like '%50%'")
 	public List<Course> courseWithNameLike50();
 
-	@Query(value = "select * from course where name like '%50%'", nativeQuery = true)
+	@Query(value = "select * from Course where name like '%50%'", nativeQuery = true)
 	public List<Course> courseWithNameLike50NativeQuery();
 
 	@Query(name = CourseRepository.FIND_ALL)

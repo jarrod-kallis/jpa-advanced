@@ -17,6 +17,7 @@ import javax.persistence.OneToMany;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.in28minutes.jpa.hibernate.demo.repository.CourseRepository;
 
 @Entity
@@ -43,6 +44,7 @@ public class Course {
 	@OneToMany(mappedBy = "course", cascade = CascadeType.REMOVE)
 	private List<Review> reviews = new ArrayList<Review>();
 
+	@JsonIgnore
 	@ManyToMany(mappedBy = "courses")
 	private List<Student> students = new ArrayList<Student>();
 
