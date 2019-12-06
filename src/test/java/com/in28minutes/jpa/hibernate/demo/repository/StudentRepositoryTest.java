@@ -33,6 +33,6 @@ public class StudentRepositoryTest extends BaseTest {
 	@Transactional
 	public void getCourses() {
 		Student student = repo.findById(20001);
-		assertEquals(2, student.getCourses().size());
+		assertEquals(3, student.getCourses().size());
 	}
 }

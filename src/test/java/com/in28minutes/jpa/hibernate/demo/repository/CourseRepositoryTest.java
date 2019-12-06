@@ -29,7 +29,7 @@ public class CourseRepositoryTest {
 	@Test
 	public void findAll() {
 		List<Course> courses = courseRepo.findAll();
-		assertEquals(3, courses.size());
+		assertEquals(4, courses.size());
 	}
 
 	@Test
