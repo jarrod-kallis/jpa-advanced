@@ -1,12 +1,14 @@
 package com.in28minutes.jpa.hibernate.demo.entity;
 
+import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.MappedSuperclass;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
 
-@MappedSuperclass
-//@Entity
-//@Inheritance(strategy = InheritanceType.JOINED) // Default inheritance is SINGLE_TABLE
+//@MappedSuperclass
+@Entity
+@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS) // Default inheritance is SINGLE_TABLE
 //@DiscriminatorColumn(name = "EmployeeType") // Default is DTYPE and only used for SINGLE_TABLE
 public abstract class Employee {
 	@Id

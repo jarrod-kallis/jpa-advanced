@@ -54,6 +54,7 @@ public class Course {
 
 	public Course(String name) {
 		super();
+//		this.id = 100;
 		this.name = name;
 	}
 

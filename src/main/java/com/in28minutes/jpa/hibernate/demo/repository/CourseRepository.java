@@ -47,6 +47,11 @@ public class CourseRepository {
 		return em.merge(course);
 	}
 
+	public Course insert(Course course) {
+		em.persist(course);
+		return course;
+	}
+
 	public void deleteById(long id) {
 		Course course = findById(id);
 

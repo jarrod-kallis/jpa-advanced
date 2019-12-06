@@ -69,4 +69,11 @@ public class CourseRepositoryTest {
 		course = courseRepo.save(course);
 		assertEquals("Updated course", courseRepo.findById(10001).getName());
 	}
+
+	@Test
+	@DirtiesContext
+	public void insertUsingPersist() {
+		Course course = courseRepo.insert(new Course("Persist my new course"));
+		assertNotEquals(0, course.getId());
+	}
 }
